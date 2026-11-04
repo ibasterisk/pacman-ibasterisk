@@ -29,6 +29,9 @@
             savingScore: "Ukladám skóre...",
             viewHighscore: "Zobraziť rebríček",
             enterName: "Zadaj meno hráča.",
+            enterPlayerName: "Zadaj svoje meno pred začiatkom hry:",
+            confirm: "OK",
+            cancel: "Zrušiť",
             noScores: "Zatiaľ žiadne výsledky.",
             storageError: "Výsledok sa nepodarilo uložiť do prehliadača."
 
@@ -60,6 +63,9 @@
             savingScore: "Saving highscore...",
             viewHighscore: "View Highscore List",
             enterName: "Please enter your name.",
+            enterPlayerName: "Enter your name before starting:",
+            confirm: "OK",
+            cancel: "Cancel",
             noScores: "No scores yet.",
             storageError: "Could not save the score in this browser."
 

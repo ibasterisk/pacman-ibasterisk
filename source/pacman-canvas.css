@@ -280,3 +280,95 @@ body {
 [data-lang-section][hidden] {
     display: none !important;
 }
+
+
+/* iBasterisk custom player dialog */
+.ibasterisk-modal[hidden] {
+    display: none !important;
+}
+
+.ibasterisk-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+}
+
+.ibasterisk-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.82);
+}
+
+.ibasterisk-modal-box {
+    position: relative;
+    z-index: 2;
+    width: min(92vw, 520px);
+    margin: 12vh auto 0 auto;
+    background: #06130d;
+    border: 2px solid #00ff88;
+    box-shadow:
+        0 0 18px rgba(0, 255, 136, 0.35),
+        inset 0 0 14px rgba(0, 255, 136, 0.08);
+    padding: 22px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.ibasterisk-modal-box h2 {
+    margin: 0 0 18px 0;
+    color: #00ff88;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+#player-name-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    background: #000;
+    color: #fff;
+    border: 2px solid #00c8ff;
+    outline: none;
+    font-size: 18px;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+}
+
+#player-name-input:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 10px rgba(0,255,136,0.35);
+}
+
+#player-name-error {
+    min-height: 22px;
+    margin-top: 12px;
+    color: #ff6464;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.ibasterisk-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.ibasterisk-modal-actions .button,
+.ibasterisk-modal-actions button.button {
+    cursor: pointer;
+    min-width: 140px;
+    border: 1px solid #00ff88;
+    background: #07261a;
+    color: #fff;
+    padding: 12px 18px;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.ibasterisk-modal-actions .button:hover,
+.ibasterisk-modal-actions button.button:hover {
+    background: #0d3a29;
+    box-shadow: 0 0 10px rgba(0,255,136,0.25);
+}
+

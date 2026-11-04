@@ -55,6 +55,135 @@ function geronimo() {
                 }
         }
 
+
+        /* Player identification and automatic highscore */
+        let currentPlayer = "";
+
+
+        function askPlayerName() {
+                return new Promise(function (resolve) {
+                        let previousName = "";
+
+                        try {
+                                previousName = localStorage.getItem(
+                                        "ibasterisk-maze-last-player"
+                                ) || "";
+                        } catch (error) {
+                                console.warn(error);
+                        }
+
+                        const modal = $("#player-name-modal");
+                        const input = $("#player-name-input");
+                        const ok = $("#player-name-ok");
+                        const cancel = $("#player-name-cancel");
+                        const errorText = $("#player-name-error");
+
+                        function close(result) {
+                                ok.off(".playerdialog");
+                                cancel.off(".playerdialog");
+                                input.off(".playerdialog");
+
+                                modal.attr("hidden", true);
+                                resolve(result);
+                        }
+
+                        function submit() {
+                                const name = String(input.val() || "")
+                                        .trim()
+                                        .slice(0, 30);
+
+                                if (!name) {
+                                        errorText.text(
+                                                iBasteriskI18n.t("enterName")
+                                        );
+                                        return;
+                                }
+
+                                try {
+                                        localStorage.setItem(
+                                                "ibasterisk-maze-last-player",
+                                                name
+                                        );
+                                } catch (error) {
+                                        console.warn(error);
+                                }
+
+                                close(name);
+                        }
+
+                        input.val(currentPlayer || previousName);
+                        errorText.text("");
+
+                        modal.removeAttr("hidden");
+                        input.trigger("focus");
+
+                        ok.on("click.playerdialog", submit);
+
+                        cancel.on("click.playerdialog", function () {
+                                close(null);
+                        });
+
+                        input.on("keydown.playerdialog", function (event) {
+                                if (event.key === "Enter") {
+                                        event.preventDefault();
+                                        submit();
+                                }
+
+                                if (event.key === "Escape") {
+                                        event.preventDefault();
+                                        close(null);
+                                }
+                        });
+                });
+        }
+
+        function storePlayerScore(name, score, level) {
+                name = String(name || "").trim().slice(0, 30);
+                score = Number(score);
+                level = Number(level);
+
+                if (!name || !Number.isFinite(score) || score <= 0) {
+                        return false;
+                }
+
+                const scores = readScores();
+                const index = scores.findIndex(function (entry) {
+                        return String(entry.name).toLowerCase() ===
+                               name.toLowerCase();
+                });
+
+                if (index >= 0) {
+                        if (Number(scores[index].score) >= score) {
+                                return true;
+                        }
+
+                        scores[index] = {name: name, score: score, level: level};
+                } else {
+                        scores.push({name: name, score: score, level: level});
+                }
+
+                scores.sort(function (a, b) {
+                        return Number(b.score) - Number(a.score);
+                });
+
+                try {
+                        localStorage.setItem(
+                                HIGHSCORE_KEY,
+                                JSON.stringify(scores.slice(0, 10))
+                        );
+                        return true;
+                } catch (error) {
+                        console.warn("Highscore save failed:", error);
+                        return false;
+                }
+        }
+
+        function autoSaveScore(score) {
+                if (currentPlayer) {
+                        storePlayerScore(currentPlayer, score, game.level);
+                }
+        }
+
         function getHighscore() {
                 const list = $("#highscore-list");
                 list.empty();
@@ -86,33 +215,18 @@ function geronimo() {
                 });
         }
 
+
         function ajax_add(name, score, level) {
-                const scores = readScores();
+                const saved = storePlayerScore(name, score, level);
 
-                scores.push({
-                        name: name,
-                        score: Number(score),
-                        level: Number(level)
-                });
-
-                scores.sort(function (a, b) {
-                        return b.score - a.score;
-                });
-
-                try {
-                        localStorage.setItem(
-                                HIGHSCORE_KEY,
-                                JSON.stringify(scores.slice(0, 10))
-                        );
-
+                if (saved) {
                         const button = $("<span>")
                                 .addClass("button")
                                 .attr("id", "show-highscore")
                                 .text(iBasteriskI18n.t("viewHighscore"));
 
                         $("#highscore-form").empty().append(button);
-                } catch (error) {
-                        console.error("Highscore save failed:", error);
+                } else {
                         $("#highscore-form").text(
                                 iBasteriskI18n.t("storageError")
                         );
@@ -330,9 +444,13 @@ function geronimo() {
 			this.gameOver = false;
 		};
 
-		this.newGame = function () {
+		this.newGame = async function () {
 			var r = confirm(iBasteriskI18n.t("restartConfirm"));
 			if (r) {
+                                const name = await askPlayerName();
+                                if (!name) return;
+                                currentPlayer = name;
+
 				console.log("new Game");
 				this.init(0);
 				this.forceResume();
@@ -442,13 +560,19 @@ function geronimo() {
 					<span class='button' id='score-submit'>${iBasteriskI18n.t('save')}</span>
 				</div>` : `<div id='invalid-score'>${iBasteriskI18n.t('invalidScore')}</div>`;
 			this.pauseAndShowMessage(iBasteriskI18n.t("gameOver"), iBasteriskI18n.t("totalScore") + ": " + this.score.score + (HIGHSCORE_ENABLED ? inputHTML : ''));
-			$('#playerName').focus();
+			$('#playerName').val(currentPlayer).focus();
 		}
 
 		/* game controls */
 
-		this.forceStartAnimationLoop = function () {
-			// start timer
+		this.forceStartAnimationLoop = async function () {
+			if (!currentPlayer) {
+                        const name = await askPlayerName();
+                        if (!name) return;
+                        currentPlayer = name;
+                }
+
+                // start timer
 			this.timer.start();
 
 			this.pause = false;
@@ -665,6 +789,7 @@ function geronimo() {
 		};
 		this.add = function (i) {
 			this.score += i;
+                    autoSaveScore(this.score);
 		};
 		this.refresh = function (h) {
 			$(h).html(iBasteriskI18n.t("score") + ": " + this.score);
