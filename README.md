@@ -1,46 +1,119 @@
-# iBasterisk Maze Edition
+# 🕹️ iBasterisk Maze Edition
 
-Retro arcade maze game customized for the iBasterisk ecosystem.
+**Jazyk:** 🇸🇰 Slovenčina | [🇬🇧 English](README_EN.md)
 
-## Features
+Retro arkádová hra s vlastným neónovým dizajnom,
+prevádzkovaná prostredníctvom Docker kontajnera.
 
-- Browser-based arcade game
-- Custom iBasterisk neon design
-- Keyboard controls
-- Sound effects
-- Docker deployment
-- Native ARM64 support
-- Nginx web server
+Projekt vychádza z otvorenej hry pacman-canvas,
+ktorú sme upravili pre ekosystém iBasterisk.
 
-## Docker deployment
+## 🎮 Funkcie
 
-Run:
+- Hranie priamo vo webovom prehliadači
+- Vlastný iBasterisk neónový dizajn
+- Ovládanie klávesnicou
+- Zvukové efekty
+- Podpora Docker Compose
+- Natívna podpora ARM64
+- Webový server Nginx
+- Možnosť prevádzky cez Tailscale
+
+## 🐳 Požiadavky
+
+- Linux server
+- Docker Engine
+- Docker Compose
+- Voľný TCP port
+
+## 📁 Štruktúra projektu
+
+    pacman/
+    ├── Dockerfile
+    ├── docker-compose.yml
+    ├── nginx.conf
+    ├── .env.example
+    ├── README.md
+    ├── README_EN.md
+    └── source/
+
+## 🚀 Inštalácia
+
+Naklonujeme repozitár:
+
+    git clone https://github.com/ibasterisk/pacman-ibasterisk.git
+    cd pacman-ibasterisk
+
+Vytvoríme lokálnu konfiguráciu:
+
+    cp .env.example .env
+
+V súbore .env nastavíme IP adresu, na ktorej
+má byť aplikácia dostupná.
+
+Príklad:
+
+    PACMAN_BIND_IP=127.0.0.1
+
+Spustíme kontajner:
 
     docker compose up -d --build
 
-## Configuration
+## 🌐 Prístup k aplikácii
 
-The application runs on port 80 inside the container.
+Predvolený port aplikácie je 3060.
 
-The host port is configured in docker-compose.yml.
+Pri lokálnej konfigurácii:
 
-## Project structure
+    http://127.0.0.1:3060
 
-- Dockerfile - Docker image definition
-- docker-compose.yml - Container configuration
-- nginx.conf - Web server configuration
-- source/ - Game source code
+Pri použití Tailscale nastavíme v .env
+Tailscale IPv4 adresu servera.
 
-## Credits
+## 🔧 Správa kontajnera
 
-iBasterisk Maze Edition is a customized version of the
-open-source pacman-canvas project.
+Stav:
 
-Original project:
+    docker compose ps
+
+Logy:
+
+    docker compose logs --tail=50
+
+Reštart:
+
+    docker compose restart pacman
+
+Zastavenie:
+
+    docker compose down
+
+## 🔄 Aktualizácia
+
+    git pull
+    docker compose up -d --build
+
+## 🔐 Bezpečnosť
+
+- Port môže byť viazaný iba na localhost alebo Tailscale.
+- Verejné HTTPS je možné zabezpečiť cez Caddy.
+- Lokálny súbor .env nie je súčasťou Git repozitára.
+- Pred verejným nasadením odporúčame preveriť externé skripty.
+
+## 📜 Licencia a pôvod
+
+iBasterisk Maze Edition je upravená verzia projektu
+pacman-canvas.
+
+Pôvodný projekt:
 https://github.com/platzhersh/pacman-canvas
 
-Original project license: CC0 1.0 Universal.
+Licencia pôvodného projektu: CC0 1.0 Universal.
 
-## GitHub
+Úpravy a Docker integrácia: iBasterisk.
 
-https://github.com/ibasterisk
+## 👨‍💻 Autor úprav
+
+**iBasterisk**
+
+GitHub: https://github.com/ibasterisk
