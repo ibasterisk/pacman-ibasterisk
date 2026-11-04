@@ -1,0 +1,24 @@
+# Backups
+backup-*/
+*.bak
+*.backup
+
+# Original upstream Git metadata
+source/.git/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Runtime and dependencies
+node_modules/
+source/node_modules/
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Original repository backup
+backup-original-git/

@@ -1,0 +1,12 @@
+services:
+  pacman:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ibasterisk/pacman:local
+    container_name: pacman
+    restart: unless-stopped
+    ports:
+      - "${PACMAN_BIND_IP:-127.0.0.1}:3060:80"
+    security_opt:
+      - no-new-privileges:true

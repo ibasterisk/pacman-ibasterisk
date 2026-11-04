@@ -1,0 +1,14 @@
+.git
+.gitignore
+backup-*/
+*.bak
+*.backup
+.env
+.env.*
+source/.git
+source/node_modules
+node_modules
+*.log
+
+# Original repository backup
+backup-original-git/
