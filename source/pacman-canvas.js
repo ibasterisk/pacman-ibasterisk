@@ -39,57 +39,102 @@ function geronimo() {
 	var mapConfig = "data/map.json";
 
 
-	/* AJAX stuff */
-	var getHighscore = () => {
-		setTimeout(ajax_get, 30);
-	}
-	var ajax_get = () => {
-		var date = new Date().getTime();
-		$.ajax({
-			datatype: "json",
-			type: "GET",
-			url: "data/db-handler.php",
-			data: {
-				timestamp: date,
-				action: "get"
-			},
-			success: function (msg) {
-				$("#highscore-list").text("");
-				for (var i = 0; i < msg.length; i++) {
-					$("#highscore-list").append("<li>" + msg[i]['name'] + "<span id='score'>" + msg[i]['score'] + "</span></li>");
-				}
-			}
-		});
-	}
-	var ajax_add = (n, s, l) => {
+	
+        /* iBasterisk local Highscore */
+        const HIGHSCORE_KEY = "ibasterisk-maze-highscores-v1";
 
-		$.ajax({
-			type: 'POST',
-			url: 'data/db-handler.php',
-			data: {
-				action: 'add',
-				name: n,
-				score: s,
-				level: l
-			},
-			dataType: 'json',
-			success: function (data) {
-				console.log('Highscore added: ' + data);
-				$('#highscore-form').html('<span class="button" id="show-highscore">View Highscore List</span>');
-			},
-			error: function (errorThrown) {
-				console.log(errorThrown);
-			}
-		});
-	}
+        function readScores() {
+                try {
+                        const data = JSON.parse(
+                                localStorage.getItem(HIGHSCORE_KEY) || "[]"
+                        );
+                        return Array.isArray(data) ? data : [];
+                } catch (error) {
+                        console.warn("Highscore read failed:", error);
+                        return [];
+                }
+        }
 
-	function addHighscore() {
-		var name = $("input[type=text]").val();
-		$("#highscore-form").html("Saving highscore...");
-		ajax_add(name, game.score.score, game.level);
-	}
+        function getHighscore() {
+                const list = $("#highscore-list");
+                list.empty();
 
-	function buildWall(context, gridX, gridY, width, height) {
+                const scores = readScores();
+
+                if (scores.length === 0) {
+                        $("<li>")
+                                .text(iBasteriskI18n.t("noScores"))
+                                .appendTo(list);
+                        return;
+                }
+
+                scores.forEach(function (entry) {
+                        const item = $("<li>");
+
+                        item.append(
+                                document.createTextNode(
+                                        String(entry.name) + " "
+                                )
+                        );
+
+                        $("<span>")
+                                .addClass("highscore-points")
+                                .text(entry.score)
+                                .appendTo(item);
+
+                        list.append(item);
+                });
+        }
+
+        function ajax_add(name, score, level) {
+                const scores = readScores();
+
+                scores.push({
+                        name: name,
+                        score: Number(score),
+                        level: Number(level)
+                });
+
+                scores.sort(function (a, b) {
+                        return b.score - a.score;
+                });
+
+                try {
+                        localStorage.setItem(
+                                HIGHSCORE_KEY,
+                                JSON.stringify(scores.slice(0, 10))
+                        );
+
+                        const button = $("<span>")
+                                .addClass("button")
+                                .attr("id", "show-highscore")
+                                .text(iBasteriskI18n.t("viewHighscore"));
+
+                        $("#highscore-form").empty().append(button);
+                } catch (error) {
+                        console.error("Highscore save failed:", error);
+                        $("#highscore-form").text(
+                                iBasteriskI18n.t("storageError")
+                        );
+                }
+        }
+
+        function addHighscore() {
+                const name = String($("#playerName").val() || "")
+                        .trim()
+                        .slice(0, 30);
+
+                if (!name) {
+                        $("#form-validator").text(
+                                iBasteriskI18n.t("enterName")
+                        );
+                        return;
+                }
+
+                ajax_add(name, game.score.score, game.level);
+        }
+
+        function buildWall(context, gridX, gridY, width, height) {
 		console.log("BuildWall");
 		width = width * 2 - 1;
 		height = height * 2 - 1;
@@ -172,7 +217,7 @@ function geronimo() {
 		this.monsters;
 		this.level = 1;
 		this.refreshLevel = function (h) {
-			$(h).html("Lvl: " + this.level);
+			$(h).html(iBasteriskI18n.t("level") + ": " + this.level);
 		};
 		this.canvas = $("#myCanvas").get(0);
 		this.wallColor = "#00c8ff";
@@ -286,7 +331,7 @@ function geronimo() {
 		};
 
 		this.newGame = function () {
-			var r = confirm("Are you sure you want to restart?");
+			var r = confirm(iBasteriskI18n.t("restartConfirm"));
 			if (r) {
 				console.log("new Game");
 				this.init(0);
@@ -303,7 +348,7 @@ function geronimo() {
 			} else {
 				this.level++;
 				console.log("Level " + game.level);
-				game.pauseAndShowMessage("Level " + game.level, this.getLevelTitle() + "<br/>(Click to continue!)");
+				game.pauseAndShowMessage(iBasteriskI18n.t("level") + " " + game.level, this.getLevelTitle() + "<br/>(" + iBasteriskI18n.t("clickContinue") + ")");
 				game.refreshLevel(".level");
 				this.init(1);
 			}
@@ -315,7 +360,7 @@ function geronimo() {
 			for (var i = 0; i < count; i++) {
 				html += " <img src='img/heart.png'>";
 			}
-			$(".lives").html("Lives: " + html);
+			$(".lives").html(iBasteriskI18n.t("lives") + ": " + html);
 
 		};
 
@@ -394,9 +439,9 @@ function geronimo() {
 			var inputHTML = scoreIsValid ? `<div id='highscore-form'>
 					<span id='form-validator'></span>
 					<input type='text' id='playerName'/>
-					<span class='button' id='score-submit'>save</span>
-				</div>` : `<div id='invalid-score'>Your score looks fake, the highscore list is only for honest players ;)</div>`;
-			this.pauseAndShowMessage("Game over", "Total Score: " + this.score.score + (HIGHSCORE_ENABLED ? inputHTML : ''));
+					<span class='button' id='score-submit'>${iBasteriskI18n.t('save')}</span>
+				</div>` : `<div id='invalid-score'>${iBasteriskI18n.t('invalidScore')}</div>`;
+			this.pauseAndShowMessage(iBasteriskI18n.t("gameOver"), iBasteriskI18n.t("totalScore") + ": " + this.score.score + (HIGHSCORE_ENABLED ? inputHTML : ''));
 			$('#playerName').focus();
 		}
 
@@ -414,7 +459,7 @@ function geronimo() {
 
 		this.forcePause = function () {
 			this.timer.stop();
-			this.pauseAndShowMessage("Pause", "Click to Resume");
+			this.pauseAndShowMessage(iBasteriskI18n.t("pause"), iBasteriskI18n.t("resume"));
 		}
 
 		this.forceResume = function () {
@@ -433,7 +478,7 @@ function geronimo() {
 			} else if (this.pause) {
 				this.forceResume();
 			} else {
-				this.pauseAndShowMessage("Pause", "Click to Resume");
+				this.pauseAndShowMessage(iBasteriskI18n.t("pause"), iBasteriskI18n.t("resume"));
 			}
 		};
 
@@ -622,7 +667,7 @@ function geronimo() {
 			this.score += i;
 		};
 		this.refresh = function (h) {
-			$(h).html("Score: " + this.score);
+			$(h).html(iBasteriskI18n.t("score") + ": " + this.score);
 		};
 
 	}
@@ -1377,7 +1422,7 @@ function geronimo() {
 		$('body').on('click', '#score-submit', function () {
 			console.log("submit highscore pressed");
 			if ($('#playerName').val() === "" || $('#playerName').val() === undefined) {
-				$('#form-validator').html("Please enter a name<br/>");
+				$("#form-validator").text(iBasteriskI18n.t("enterName"));
 			} else {
 				$('#form-validator').html("");
 				addHighscore();

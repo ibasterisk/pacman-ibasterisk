@@ -1,15 +1,13 @@
-/* Google Web Fonts */
+/* Press Start 2P with Slovak diacritics */
 @font-face {
-  font-family: 'Press Start 2P';
-  font-style: normal;
-  font-weight: 400;
-  src: url('fonts/PressStart2Play.eot');
-  src: url('fonts/PressStart2Play.eot?iefix') format('eot'),
-       url('fonts/PressStart2Play.woff') format('woff'),
-       url('fonts/PressStart2Play.ttf') format('truetype');
+    font-family: 'Press Start 2P';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/PressStart2P-SK.ttf?v=2') format('truetype');
+    font-display: swap;
 }
 
-/* ---------------- */
+
 
 body {
 	background-color: #000;
@@ -250,4 +248,35 @@ body {
     white-space: pre;
     text-align: center;
     margin: 28px auto;
+}
+
+/* === iBasterisk language switch === */
+
+.ibasterisk-language {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 14px auto;
+}
+
+.ibasterisk-language button {
+    background: #12352b;
+    color: #eaf6ff;
+    border: 1px solid #00c8ff;
+    border-radius: 6px;
+    padding: 9px 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ibasterisk-language button:hover,
+.ibasterisk-language button.active {
+    background: #00ff88;
+    color: #0b0f14;
+    border-color: #00ff88;
+}
+
+/* SK / EN content sections */
+[data-lang-section][hidden] {
+    display: none !important;
 }

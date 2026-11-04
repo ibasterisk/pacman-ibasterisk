@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-<!--<html lang="en">-->
-<html lang="en">
+<!--<html lang="sk">-->
+<html lang="sk">
 <head>
 	<meta charset="utf-8" />
 	<title>iBasterisk Maze</title>
@@ -11,35 +11,34 @@
 
 
 	<!-- SEO Stuff -->
-    <meta name="description" content="Play Pacman Canvas for free on your desktop or mobile. This whole game is open source an was created in HTML5." />
-    <link rel="canonical" href="http://pacman.platzh1rsch.ch/" />
-    <meta name="author" content="platzh1rsch.ch" />
-    <meta name="publisher" content="platzh1rsch.ch" />
-    <meta name="copyright" content="&copy; Copyright (c) platzh1rsch.ch" />
+    <meta name="description" content="iBasterisk Maze Edition - retro arkadova hra v Docker prostredi.">
+    
+    
+    
+    
     <meta name="robots" content="index,follow" />
-    <meta http-equiv="content-language" content="de">
-    <meta name="language" content="de">
+    
+    
     <meta name="page-topic" content="Games/Arcade" />
 
     <meta content="National" name="distribution" />
-    <meta content="pacman.platzh1rsch.ch" name="target" />
+    
 
    	<!-- Facebook Open Graph Information -->
-	<meta property="og:image" content="http://pacman.platzh1rsch.ch/img/Icon-200x200.png"/>
-    <meta property="og:title" content="Pacman Canvas in HTML5" />
-	<meta property="og:description" content="Play Pacman Canvas for free on your desktop or mobile. This whole game is open source an was created in HTML5." />
-    <meta property="og:url" content="http://pacman.platzh1rsch.ch/" />
-    <meta property="og:site_name" content="Pacman Canvas in HTML5" />
-	<meta property="og:locale" content="en_US" />
+	
+    
+	
+    
+    
+	
 
 	<!-- site icons -->
 	<link rel="shortcut icon" href="img/Icon-130x130.png" />
 	<link rel="apple-touch-icon" href="img/Icon-130x130.png" />
 
-    <meta property="og:image" content="http://pacman.platzh1rsch.ch/img/Icon-130x130.png"/>
+    
 
-	<!-- AppsFuel verification code -->
-	<meta name="appsfuel_code" content="83d3cedc1050a5c"/>
+	
 	
 	<!-- Mobile Viewport -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
@@ -51,21 +50,7 @@
 	<script src="js/jquery-1.10.2.min.js" type="text/javascript"></script>
 	<script src="js/jquery.hammer.min.js" type="text/javascript"></script>
 	
-	<!-- Google Analytics -->
-	<script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-28993174-1']);
-	  _gaq.push(['_setDomainName', 'pacman.platzh1rsch.ch']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	</script>
+	
 	
 </head>
 
@@ -81,11 +66,16 @@
 <p>This HTML 5 app requires Javascript to run. Please check that Javascript is enabled in your browser.</p>
 </noscript>
 
+<div class="ibasterisk-language">
+    <button type="button" data-language="sk">🇸🇰 SK</button>
+    <button type="button" data-language="en">🇬🇧 EN</button>
+</div>
+
 <!-- Highscore -->
 <div class="content" id="highscore-content">
-	<div class="button" id="back">&lt; back</div>
+	<div class="button" id="back" data-i18n="back">&lt; Späť</div>
 	<div>
-		<h1>Highscore</h1>
+		<h1 data-i18n="highscore">Najlepšie skóre</h1>
 		<p>
 			<ol id="highscore-list">
 				
@@ -94,105 +84,167 @@
 	</div>
 </div>
 
+
 <!-- INSTRUCTIONS -->
 <div class="content" id="instructions-content">
-	<div class="button" id="back">&lt; back</div>
-	<div>
-		<h1>Instructions</h1>
-		<div class="nomobile">
-			<h2>Controls</h2>
-			<p>Use your arrow keys or [W,A,S,D] keys to navigate pacman.</p>
-			<p>To pause / resume the game press [SPACE] or [ESC] or just click into the game area.</p>
-		</div>
-		<div class="mobile">
-			<h2>Controls</h2>
-			<p>Use swipe gestures to navigate pacman.</p>
-			<p>Alternatively use the Arrow Buttons underneath the game area to navigate pacman.</p>
-			<p>To pause / resume the game, touch the game area once.</p>
-		</div>
+    <div class="button" id="back" data-i18n="back">&lt; Späť</div>
 
-		<div>
-			<h2>Ghosts</h2>
-			<p>Ghosts are creatures that hunt pacman and will kill him if they catch him.</p>
-			<p>Every ghost has its own strategy to chase down pacman.</p>
-			<h3>Inky<img src="img/inky.svg" class="pull-right"></h3>
-			Inky will stay in the ghost house until pacman has eaten at least 30 pills.	His home is the bottom right corner.
-			<h3>Blinky <img src="img/blinky.svg" class="pull-right"></h3>
-			Blinky is the most agressive of the 4 ghosts. He will start chasing pacman right away, and aim directly at him. His home is the upper right corner.
-			<h3>Pinky<img src="img/pinky.svg" class="pull-right"></h3>
-			Pinky will start chasing pacman right away, he will always aim 4 fields ahead and 4 fields left of pacman. His home is the upper left corner.
-			<h3>Clyde<img src="img/clyde.svg" class="pull-right"></h3>
-			Inky will stay in the ghost house until pacman has eaten at least 2/3 of all pills. His home is the bottom left corner.
-		</div>
+    <div data-lang-section="sk">
+        <h1>Inštrukcie</h1>
 
-		<div>
-			<h2>Ghost moods</h2>
-			The ghosts have two different moods that change the way they act during the game.
-			<h3>Scatter mood</h3>
-			<p>This is the default mood. When ghosts are in scatter mood, they will just go to their home corner and stay there.</p>
-			<img src="img/instructions/instructions_scatter.PNG">
-			<h3>Chase mood</h3>
-			<p>After a certain time the ghosts change their mood and want to go chasing pacman. This is indicated through the walls turning red.</p>
-			<img src="img/instructions/instructions_chase.PNG">
-		</div>
+        <h2>Ovládanie</h2>
+        <div class="nomobile">
+            <p>Pohybuj sa šípkami alebo klávesmi W, A, S, D.</p>
+            <p>Hru pozastavíš a obnovíš medzerníkom, klávesom ESC alebo kliknutím na hernú plochu.</p>
+        </div>
+        <div class="mobile">
+            <p>Na pohyb používaj potiahnutie prstom alebo smerové tlačidlá pod hrou.</p>
+            <p>Dotykom hernej plochy hru pozastavíš alebo obnovíš.</p>
+        </div>
 
-		<div>
-			<h2>Items</h2>
-			<h3>Pills</h3>
-			<p>The goal of every level is, to eat all the white pills without getting catched by the ghosts. One pill results in 10 points.</p>
-			<h3>Powerpills</h3>
-			<p>In every level there are 4 powerpills, which are a bit bigger than the regular ones. If Pacman eats those, he will get strong enough to eat the ghosts. You can see this indicated by the ghosts turning blue. One powerpill results in 50 points.</p>
-			<img src="img/instructions/instructions_powerpill.PNG">
-			<p>Eating a ghost results in 100 points. The soul of the ghost will return to the ghost house before starting to chase Pacman again.</p>
-		</div>
+        <h2>Duchovia</h2>
+        <p>Duchovia ťa prenasledujú. Každý má vlastnú stratégiu.</p>
 
-	</div>
+        <h3>Inky <img src="img/inky.svg" class="pull-right"></h3>
+        <p>Inky opustí domček po zjedení aspoň 30 bodiek. Jeho domov je v pravom dolnom rohu.</p>
+
+        <h3>Blinky <img src="img/blinky.svg" class="pull-right"></h3>
+        <p>Blinky je najagresívnejší duch. Prenasleduje ťa od začiatku a mieri priamo na teba.</p>
+
+        <h3>Pinky <img src="img/pinky.svg" class="pull-right"></h3>
+        <p>Pinky sa pokúša predvídať tvoj pohyb a nadbehnúť ti.</p>
+
+        <h3>Clyde <img src="img/clyde.svg" class="pull-right"></h3>
+        <p>Clyde opustí domček po zjedení približne dvoch tretín bodiek. Jeho domov je v ľavom dolnom rohu.</p>
+
+        <h2>Správanie duchov</h2>
+
+        <h3>Rozptýlenie</h3>
+        <p>Duchovia sa pohybujú smerom do svojich rohov.</p>
+        <img src="img/instructions/instructions_scatter.PNG" alt="Rozptýlenie duchov">
+
+        <h3>Prenasledovanie</h3>
+        <p>Po určitom čase začnú duchovia aktívne prenasledovať hráča. Steny bludiska zmenia farbu.</p>
+        <img src="img/instructions/instructions_chase.PNG" alt="Prenasledovanie">
+
+        <h2>Predmety a body</h2>
+
+        <h3>Bodky</h3>
+        <p>Cieľom je pozbierať všetky bodky a vyhnúť sa duchom. Každá bodka má hodnotu 10 bodov.</p>
+
+        <h3>Superbodky</h3>
+        <p>V každej úrovni sú štyri väčšie bodky. Po ich zjedení môžeš dočasne chytať duchov. Každá má hodnotu 50 bodov.</p>
+        <img src="img/instructions/instructions_powerpill.PNG" alt="Superbodka">
+
+        <p>Za chytenie ducha získaš 100 bodov. Duch sa následne vráti do svojho domčeka.</p>
+    </div>
+
+    <div data-lang-section="en" hidden>
+        <h1>Instructions</h1>
+
+        <h2>Controls</h2>
+        <div class="nomobile">
+            <p>Use the arrow keys or W, A, S, D to move.</p>
+            <p>Press SPACE, ESC or click the game area to pause or resume.</p>
+        </div>
+        <div class="mobile">
+            <p>Swipe or use the directional buttons below the game area.</p>
+            <p>Touch the game area to pause or resume.</p>
+        </div>
+
+        <h2>Ghosts</h2>
+        <p>Ghosts chase the player. Each ghost has its own strategy.</p>
+
+        <h3>Inky <img src="img/inky.svg" class="pull-right"></h3>
+        <p>Inky leaves the ghost house after at least 30 dots have been eaten. His home corner is bottom right.</p>
+
+        <h3>Blinky <img src="img/blinky.svg" class="pull-right"></h3>
+        <p>Blinky is the most aggressive ghost. He starts chasing immediately and aims directly at you.</p>
+
+        <h3>Pinky <img src="img/pinky.svg" class="pull-right"></h3>
+        <p>Pinky tries to predict your movement and intercept you.</p>
+
+        <h3>Clyde <img src="img/clyde.svg" class="pull-right"></h3>
+        <p>Clyde leaves the ghost house after roughly two thirds of the dots have been eaten. His home corner is bottom left.</p>
+
+        <h2>Ghost moods</h2>
+
+        <h3>Scatter mode</h3>
+        <p>Ghosts move towards their home corners.</p>
+        <img src="img/instructions/instructions_scatter.PNG" alt="Scatter mode">
+
+        <h3>Chase mode</h3>
+        <p>After a while, ghosts actively chase the player and the maze walls change color.</p>
+        <img src="img/instructions/instructions_chase.PNG" alt="Chase mode">
+
+        <h2>Items and points</h2>
+
+        <h3>Dots</h3>
+        <p>Collect all dots while avoiding the ghosts. Each dot is worth 10 points.</p>
+
+        <h3>Power dots</h3>
+        <p>Each level contains four larger dots. Eating one temporarily lets you catch ghosts. Each is worth 50 points.</p>
+        <img src="img/instructions/instructions_powerpill.PNG" alt="Power dot">
+
+        <p>Catching a ghost awards 100 points. The ghost then returns to its house.</p>
+    </div>
 </div>
+
 
 <!-- Info -->
 <div class="content" id="info-content">
-	<div class="button" id="back">&lt; back</div>
-	<div>
-		<h1>Info</h1>
-		<p>Version: iBasterisk Edition 1.0</p>
-		
-<pre class="moo-art">
+    <div class="button" id="back" data-i18n="back">&lt; Späť</div>
+
+    <div data-lang-section="sk">
+        <h1>Informácie</h1>
+        <p>Verzia: iBasterisk Edition 1.0</p>
+    </div>
+
+    <div data-lang-section="en" hidden>
+        <h1>Information</h1>
+        <p>Version: iBasterisk Edition 1.0</p>
+    </div>
+
+    <pre class="moo-art">
        (__)
        (oo)
  /------\/
 / |    ||
 *  /\---/\
    ~~   ~~
-</pre>
+    </pre>
 
-		<p>Written by iBasterisk</p><p><a href="https://github.com/ibasterisk" target="_blank" rel="noopener noreferrer">GitHub: ibasterisk</a></p><p>Based on the open-source pacman-canvas project.</p>
-	</div>
+    <p>apt-get moo 🐄</p>
+    <p>Written by iBasterisk</p>
+    <p>
+        <a href="https://github.com/ibasterisk"
+           target="_blank"
+           rel="noopener noreferrer">
+           GitHub: ibasterisk
+        </a>
+    </p>
+
+    <div data-lang-section="sk">
+        <p>Hra vychádza z open-source projektu pacman-canvas.</p>
+    </div>
+
+    <div data-lang-section="en" hidden>
+        <p>Based on the open-source pacman-canvas project.</p>
+    </div>
 </div>
-
-
 
 <!-- main game content -->
 <div class="content" id="game-content">
 
-		<!-- Google AdSense -->
-		<div id="adsense">
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<ins class="adsbygoogle"
-			     style="display:inline-block;width:320px;height:50px"
-			     data-ad-client="ca-pub-0176206735745791"
-			     data-ad-slot="6492298622"></ins>
-			<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
-		</div>
+		
 	
 	
 	<!-- main game content -->
 	<div class="game wrapper">
 	
-		<div class="score">Score:</div>
-		<div class="level">Lvl:</div>
-		<div class="lives">Lives: </div>
+		<div class="score">Skóre</div>
+		<div class="level">Úroveň</div>
+		<div class="lives">Životy</div>
 		
 		<div class="controlSound">
 			<img src="img/audio-icon-mute.png" id="mute">
@@ -202,7 +254,7 @@
 			<div id="canvas-overlay-container">
 				<div id="canvas-overlay-content">
 					<div id="title">iBasterisk Maze</div>
-					<div><p id="text">Click to Play</p></div>
+					<div><p id="text" data-i18n="clickToPlay">Klikni pre štart</p></div>
 				</div>
 			</div>
 			<canvas id="myCanvas" width="540" height="390">
@@ -229,12 +281,15 @@
 		<!-- inGame Controls End -->
 		
 		<!-- Game Menu -->		
-		<div class="controls" id="menu-buttons">
+		
+
+
+<div class="controls" id="menu-buttons">
 			<ul>
-				<li class="button" id="newGame">New Game</li>
-				<li class="button" id="highscore">Highscore</li>
-				<li class="button" id="instructions">Instructions</li>
-				<li class="button" id="info">Info</li>
+				<li class="button" id="newGame" data-i18n="newGame">Nová hra</li>
+				<li class="button" id="highscore" data-i18n="highscore">Najlepšie skóre</li>
+				<li class="button" id="instructions" data-i18n="instructions">Inštrukcie</li>
+				<li class="button" id="info" data-i18n="info">Informácie</li>
 			</ul>
 			
 		</div>
@@ -273,7 +328,8 @@
 </div>
 </div>
 
-	<script src="pacman-canvas.js" type="text/javascript"></script>
+	<script src="js/ibasterisk-i18n.js"></script>
+    <script src="pacman-canvas.js" type="text/javascript"></script>
 
 
 </body>
