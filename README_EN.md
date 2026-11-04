@@ -47,3 +47,49 @@ Original project license: CC0 1.0 Universal.
 ## GitHub
 
 https://github.com/ibasterisk
+
+## 🇸🇰 🇬🇧 Localization
+
+The game supports Slovak and English via the SK / EN switch.
+
+- Localized menus, instructions and game messages
+- Custom retro player name dialog
+- Press Start 2P pixel font with Slovak character support
+- Selected language remembered in the browser
+
+## 👤 Players and automatic Highscore
+
+Players enter their name before starting a game.
+
+- Player name is required, maximum 30 characters
+- Last player name is remembered
+- New games can use a different player name
+- Scores are saved automatically during gameplay
+- The leaderboard displays TOP 10 results
+- Each player's personal best is preserved
+
+### 💾 Score storage
+
+The leaderboard uses browser `localStorage`.
+
+**Important:** Scores are not stored on the Docker server.
+Each browser has its own leaderboard. Clearing site data
+may remove saved scores.
+
+No PHP backend or database is required.
+A shared online leaderboard is not implemented yet.
+
+## ⌨️ Controls
+
+- Arrow keys or W / A / S / D – movement
+- Space – pause / resume
+- N – new game
+- M – toggle sound
+
+## 🐄 iBasterisk Edition
+
+The game also includes our legendary `apt-get moo`.
+
+Press Start 2P is distributed under the
+SIL Open Font License. See
+`source/fonts/OFL-PressStart2P.txt`.

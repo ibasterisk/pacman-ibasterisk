@@ -117,3 +117,49 @@ Licencia pôvodného projektu: CC0 1.0 Universal.
 **iBasterisk**
 
 GitHub: https://github.com/ibasterisk
+
+## 🇸🇰 🇬🇧 Dvojjazyčná verzia
+
+Hra podporuje slovenčinu a angličtinu pomocou prepínača SK / EN.
+
+- Preložené menu, inštrukcie a herné hlášky
+- Vlastné retro dialógové okno na zadanie mena
+- Pixelový font Press Start 2P so slovenskou diakritikou
+- Zapamätanie zvoleného jazyka v prehliadači
+
+## 👤 Hráči a automatický Highscore
+
+Pred spustením hry hráč zadá svoje meno.
+
+- Meno je povinné, maximálne 30 znakov
+- Posledné použité meno sa zapamätá
+- Pri novej hre je možné zvoliť iného hráča
+- Skóre sa automaticky ukladá počas hrania
+- Rebríček zobrazuje TOP 10 výsledkov
+- Každému hráčovi sa uchováva jeho najlepší výsledok
+
+### 💾 Ukladanie výsledkov
+
+Highscore využíva `localStorage` v prehliadači.
+
+**Dôležité:** Výsledky sa neukladajú na Docker server.
+Každý prehliadač má vlastný rebríček a vymazanie údajov
+stránky môže odstrániť uložené rekordy.
+
+PHP ani databáza nie sú potrebné.
+Spoločný online rebríček zatiaľ nie je implementovaný.
+
+## ⌨️ Ovládanie
+
+- Šípky alebo W / A / S / D – pohyb
+- Medzerník – pauza / pokračovanie
+- N – nová hra
+- M – zapnutie / vypnutie zvuku
+
+## 🐄 iBasterisk Edition
+
+Súčasťou hry je aj naše legendárne `apt-get moo`.
+
+Font Press Start 2P je distribuovaný pod licenciou
+SIL Open Font License. Licenčný text je uložený v
+`source/fonts/OFL-PressStart2P.txt`.
