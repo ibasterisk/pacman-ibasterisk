@@ -1,6 +1,6 @@
 # 🕹️ iBasterisk Maze Edition
 
-**Jazyk:** 🇸🇰 Slovenčina | [🇬🇧 English](README_EN.md)
+**Jazyk:** [![Slovenčina](images/sk.png)](README.md) | [![English](images/en.png)](README_EN.md)
 
 Retro arkádová hra s vlastným neónovým dizajnom,
 prevádzkovaná prostredníctvom Docker kontajnera.

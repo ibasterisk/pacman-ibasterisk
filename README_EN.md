@@ -1,6 +1,6 @@
 # iBasterisk Maze Edition
 
-**Language:** [🇸🇰 Slovenčina](README.md) | 🇬🇧 English
+**Language:** [![Slovenčina](images/sk.png)](README.md) | [![English](images/en.png)](README_EN.md)
 
 
 Retro arcade maze game customized for the iBasterisk ecosystem.
