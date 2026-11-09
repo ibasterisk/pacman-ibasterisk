@@ -1,23 +1,21 @@
-﻿{
-  "manifest_version": 2,
-  "name": "Pacman Canvas",
-  "version": "1.0.6",
-
-  "short_name": "Pacman Canvas",
-  "description": "An old classic, rewritten in HTML5",
-
-  "author": "Platzh1rsch",
-
-  "icons": {
-    "128": "img/icon-128.png"
-  },
-
-  "offline_enabled": true,
-
-  "app": {
-    "urls": ["http://pacman.platzh1rsch.ch/"],
-    "launch": {
-      "web_url": "http://pacman.platzh1rsch.ch"
+{
+  "name": "iBasterisk Maze",
+  "short_name": "Pac-Man",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-  }
+  ]
 }
